@@ -16,4 +16,4 @@ See [BUILD.md](BUILD.md) and [INSTALL.md](INSTALL.md). Configuration is stored i
 
 ## License
 
-GPL-3.0-or-later. See [LICENSE](LICENSE).
+GNU General Public License v3.0. See [LICENSE](LICENSE).
