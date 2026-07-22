@@ -1,18 +1,36 @@
-# Building
+# Building from source
+
+Building nVibrant GUI requires Qt 6.4 or newer, CMake, Ninja, and a compiler
+with C++20 support. You will also need
+[nvibrant](https://github.com/Tremeschin/nvibrant) to actually change your
+display settings.
+
+## Arch Linux
+
+Install the build tools and Qt:
 
 ```sh
-sudo pacman -S qt6-base qt6-tools cmake ninja gcc
+sudo pacman -S --needed base-devel cmake ninja qt6-base
+```
+
+If you do not already have `nvibrant`, it is available from the AUR as
+`nvibrant-bin`.
+
+## Build
+
+From the project directory, run:
+
+```sh
 cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-Qt 6.4 or newer and a C++20 compiler are required. Install `nvibrant` separately before running the GUI.
-
-For a clean release check:
+The finished program will be at `build/nvibrant-gui`. You can run it without
+installing it:
 
 ```sh
-cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-cmake --build build
-DESTDIR="$PWD/stage" cmake --install build
-desktop-file-validate packaging/nvibrant-gui.desktop
+./build/nvibrant-gui
 ```
+
+If CMake cannot find Qt, make sure the Qt 6 development package for your Linux
+distribution is installed.

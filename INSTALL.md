@@ -1,7 +1,38 @@
-# Installation and packaging
+# Installing nVibrant GUI
 
-Install with `sudo cmake --install build`. Remove installed files with `sudo cmake --build build --target uninstall`.
+The easiest option on Arch Linux is to install the AUR package once it is
+available. If you have downloaded the source instead, follow the instructions
+in [BUILD.md](BUILD.md) first.
 
-For a local Arch package, first create or download the versioned source archive referenced by `PKGBUILD`, then run `makepkg -si`. Before publishing to the AUR, publish the matching `v1.0.0` GitHub release, update its SHA-256 checksum, and generate `.SRCINFO` with `makepkg --printsrcinfo > .SRCINFO`.
+## Install a local build
 
-The runtime dependency is named `nvibrant`; the current AUR `nvibrant-bin` package provides it. Settings can generate `~/.config/autostart/nvibrant-gui.desktop`.
+After building the project, install it system-wide with:
+
+```sh
+sudo cmake --install build
+```
+
+This installs the application, desktop entry, icon, and license under `/usr/local`.
+You can then launch **nVibrant GUI** from your application menu or run:
+
+```sh
+nvibrant-gui
+```
+
+`nvibrant` must also be installed and available in your `PATH`.
+
+## Start automatically
+
+Open **File → Settings** in nVibrant GUI and enable **Start on login**. The app
+will create an autostart entry in your user configuration directory.
+
+## Uninstall
+
+From the same source and build directory, run:
+
+```sh
+sudo cmake --build build --target uninstall
+```
+
+Your settings and presets are kept in `~/.config/nvibrant-gui`. Remove that
+directory manually if you also want to delete your personal configuration.
