@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=nVibrant GUI
+Comment=Configure NVIDIA Digital Vibrance on Wayland
+Exec=nvibrant-gui
+Icon=nvibrant-gui
+Terminal=false
+Categories=Settings;HardwareSettings;Qt;
+Keywords=NVIDIA;Wayland;Vibrance;Display;
