@@ -1,19 +1,52 @@
 # nVibrant GUI
 
-A native Linux Qt 6 Widgets frontend for [nvibrant](https://github.com/Tremeschin/nvibrant), focused on NVIDIA GPUs under KDE Plasma and GNOME Wayland sessions.
-
-The application provides staged vibrance control, multiple GPU/output selection, JSON presets, a system tray, autostart, hot-plug display detection, high-DPI-aware layouts, and native error reporting. Adjustments are remembered separately as you move between monitors and sent together when Apply is pressed, while Reset all monitors clears every detected output on the selected GPU. Select a preset and use Load to apply it immediately. Display topology is monitored while the application runs; connected displays are added, removed displays disappear, and valid staged edits survive a refresh. The interface uses bounded scrolling when the window, font, or display scale cannot fit all controls. It delegates all hardware access to the upstream `nvibrant` executable using asynchronous `QProcess`; UI code never invokes a shell.
-
-## Upstream interface assumptions
-
-nvibrant 1.2.x accepts one positional vibrance value per physical display port. Ports are ordered by the NVIDIA driver and omitted positions default to zero. The selected GPU is passed in the `NVIDIA_GPU` environment variable. Upstream exposes no read operation, so “current value” means the last value applied during this GUI session (zero until first use), not a value queried from the driver. The GUI sends a complete remembered port vector to avoid inadvertently resetting another display.
-
-The requested UI range is 0–1023. Upstream also supports -1024–1023, but negative/desaturation values are deliberately outside this frontend's current contract.
+I wanted a simple way to adjust NVIDIA Digital Vibrance on Wayland without
+reaching for the command line every time, so I built a Qt frontend for
+[nvibrant](https://github.com/Tremeschin/nvibrant). It is primarily intended
+for KDE Plasma and GNOME users with NVIDIA GPUs.
 
 ![nVibrant GUI showing per-monitor vibrance controls](docs/nVibrant-GUI-Screenshot.png)
 
-See [BUILD.md](BUILD.md) and [INSTALL.md](INSTALL.md). Configuration is stored in `~/.config/nvibrant-gui/config.json`, and presets in `~/.config/nvibrant-gui/presets.json`.
+## What it can do
+
+- Show connected monitors as a visual layout instead of hiding them in a menu.
+- Keep a separate vibrance setting for each monitor.
+- Let you adjust several monitors before applying all pending changes together.
+- Save and load presets.
+- Reset every connected monitor on the selected GPU back to zero.
+- Notice when monitors are connected or removed while the app is running.
+- Run from the system tray and start automatically when you log in.
+- Apply presets when configured processes start.
+- Scale with larger fonts and high-DPI displays.
+
+Select a monitor, choose a value, and press **Apply**. You can move between
+monitors before applying; the app keeps those edits pending for you. Loading a
+preset applies it immediately.
+
+## A note about current values
+
+`nvibrant` does not provide a way to read the current vibrance value from the
+driver. Because of that, the value shown by the GUI is the last value it applied
+during the current session. It starts at zero when the app opens.
+
+The GUI sends a complete set of remembered port values whenever it applies a
+change. This avoids changing one monitor and accidentally resetting another.
+The supported range in the GUI is 0–1023. Although upstream also supports
+negative values, this app currently leaves those out to keep the controls
+focused on vibrance rather than desaturation.
+
+## Requirements
+
+- Linux with an NVIDIA GPU
+- [nvibrant](https://github.com/Tremeschin/nvibrant) 1.2.x
+- Qt 6.4 or newer
+
+See [BUILD.md](BUILD.md) for build instructions and [INSTALL.md](INSTALL.md)
+for installation and packaging notes.
+
+Configuration is stored in `~/.config/nvibrant-gui/config.json`. Presets are
+stored in `~/.config/nvibrant-gui/presets.json`.
 
 ## License
 
-GNU General Public License v3.0. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE).
