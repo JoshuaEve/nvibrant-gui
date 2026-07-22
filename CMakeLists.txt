@@ -29,7 +29,7 @@ target_link_libraries(nvibrant-gui PRIVATE Qt6::Widgets)
 target_include_directories(nvibrant-gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_definitions(nvibrant-gui PRIVATE
     NVIBRANT_GUI_VERSION="${PROJECT_VERSION}"
-    NVIBRANT_GUI_GITHUB="https://github.com/Tremeschin/nvibrant")
+    NVIBRANT_GUI_GITHUB="https://github.com/JoshuaEve/nvibrant-gui")
 target_compile_options(nvibrant-gui PRIVATE -Wall -Wextra -Wpedantic)
 
 install(TARGETS nvibrant-gui RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
